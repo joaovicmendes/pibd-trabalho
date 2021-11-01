@@ -1,9 +1,3 @@
--- Excluindo DB se já existir e criando novamente
-DROP DATABASE ListaTelefonica;
-CREATE DATABASE ListaTelefonica;
-
-USE DATABASE ListaTelefonica;
-
 -- Criando tabelas
 CREATE TABLE Endereco(
     cep         VARCHAR2(9),
@@ -20,7 +14,7 @@ CREATE TABLE Carro(
     placa  VARCHAR2(7) PRIMARY KEY,
     ano    NUMBER NOT NULL,
     modelo VARCHAR2(32) NOT NULL,
-    cor    VARCHAR2(32) NOT NULL,
+    cor    VARCHAR2(32) DEFAULT 'Branco'
 );
 
 CREATE TABLE Pessoa(
@@ -41,11 +35,11 @@ CREATE TABLE Pessoa(
 CREATE TABLE Amizade(
     codigo_pessoa1 NUMBER,
     codigo_pessoa2 NUMBER,
-    dataAmizade DATE NOT NULL,
+    dataAmizade DATE DEFAULT SYSDATE,
 
     FOREIGN KEY (codigo_pessoa1) REFERENCES Pessoa(codigo),
     FOREIGN KEY (codigo_pessoa2) REFERENCES Pessoa(codigo),
-    PRIMARY KEY (codigo_pessoa1, codigo_pessoa2),
+    PRIMARY KEY (codigo_pessoa1, codigo_pessoa2)
 );
 
 CREATE TABLE Possui(
@@ -54,5 +48,5 @@ CREATE TABLE Possui(
 
     FOREIGN KEY (codigo) REFERENCES Pessoa(codigo),
     FOREIGN KEY (placa) REFERENCES Carro(placa),
-    PRIMARY KEY (codigo, placa),
+    PRIMARY KEY (codigo, placa)
 );
