@@ -37,6 +37,7 @@ CREATE TABLE Amizade(
     codigo_pessoa2 NUMBER,
     dataAmizade DATE DEFAULT SYSDATE,
 
+    --oracle usa ON DELETE RESTRICT por padrão, portanto deve ser omitido
     FOREIGN KEY (codigo_pessoa1) REFERENCES Pessoa(codigo),
     FOREIGN KEY (codigo_pessoa2) REFERENCES Pessoa(codigo),
     PRIMARY KEY (codigo_pessoa1, codigo_pessoa2)
@@ -46,7 +47,7 @@ CREATE TABLE Possui(
     codigo NUMBER,
     placa VARCHAR2(7),
 
-    FOREIGN KEY (codigo) REFERENCES Pessoa(codigo),
-    FOREIGN KEY (placa) REFERENCES Carro(placa),
+    FOREIGN KEY (codigo) REFERENCES Pessoa(codigo) ON DELETE CASCADE,
+    FOREIGN KEY (placa) REFERENCES Carro(placa) ON DELETE CASCADE,
     PRIMARY KEY (codigo, placa)
 );
