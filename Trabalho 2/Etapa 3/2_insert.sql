@@ -60,21 +60,19 @@ INSERT INTO Pessoa(
     nome,
     dataNasc,
     homepage,
-    telefone1,
-    telefone2,
     cep,
     rua,
-    numero
+    numero,
+    complemento
 ) VALUES (
     007,
     'Alice Costa',
     TO_DATE('2000/07/25', 'yyyy/mm/dd'),
     'github.com/username',
-    '35 9 12345678',
-    '16 9 12345678',
     '99999-999',
     'Rua Episcopal',
-    2474
+    2474,
+    'Apto 000A'
 );
 
 INSERT INTO Pessoa(
@@ -82,19 +80,60 @@ INSERT INTO Pessoa(
     nome,
     dataNasc,
     homepage,
-    telefone1,
     cep,
     rua,
-    numero
+    numero,
+    complemento
 ) VALUES (
     42,
     'Bob da Silva',
     TO_DATE('1991/01/01', 'yyyy/mm/dd'),
     'twitter.com/testestes',
-    '35 9 12345678',
     '11111-111',
     'Rua França',
-    100
+    100,
+    'Condominio ABC'
+);
+
+-- Inserindo Telefones
+INSERT INTO Telefone(
+    codigo,
+    telefone
+) VALUES (
+    42,
+    '35 9 12345677'
+);
+
+INSERT INTO Telefone(
+    codigo,
+    telefone
+) VALUES (
+    42,
+    '35 9 12345678'
+);
+
+INSERT INTO Telefone(
+    codigo,
+    telefone
+) VALUES (
+    42,
+    '35 9 12345679'
+);
+
+INSERT INTO Telefone(
+    codigo,
+    telefone
+) VALUES (
+    007,
+    '35 9 12345678'
+);
+
+INSERT INTO Telefone(
+    codigo,
+    telefone
+) VALUES (
+    007,
+    '16 9 12345678'
 );
 
 -- Inserindo Amizades

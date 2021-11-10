@@ -3,11 +3,11 @@ CREATE TABLE Endereco(
     cep         VARCHAR2(9),
     rua         VARCHAR2(128),
     numero      NUMBER,
+    complemento VARCHAR2(128),
     cidade      VARCHAR2(64) NOT NULL,
     bairro      VARCHAR2(64) NOT NULL,
-    complemento VARCHAR2(128) NOT NULL,
 
-    PRIMARY KEY (cep, rua, numero)
+    PRIMARY KEY (cep, rua, numero, complemento)
 );
 
 CREATE TABLE Carro(
@@ -18,18 +18,24 @@ CREATE TABLE Carro(
 );
 
 CREATE TABLE Pessoa(
-    codigo    NUMBER PRIMARY KEY,
-    nome      VARCHAR2(128) NOT NULL,
-    dataNasc  DATE NOT NULL,
-    homepage  VARCHAR2(128),
-    telefone1 VARCHAR2(16) NOT NULL,
-    telefone2 VARCHAR2(16),
-    cep       VARCHAR2(9) NOT NULL,
-    rua       VARCHAR2(128) NOT NULL,
-    numero    NUMBER NOT NULL,
+    codigo      NUMBER PRIMARY KEY,
+    nome        VARCHAR2(128) NOT NULL,
+    dataNasc    DATE NOT NULL,
+    homepage    VARCHAR2(128),
+    cep         VARCHAR2(9) NOT NULL,
+    rua         VARCHAR2(128) NOT NULL,
+    numero      NUMBER NOT NULL,
+    complemento VARCHAR2(128) NOT NULL,
 
-    FOREIGN KEY (cep, rua, numero)
-    REFERENCES Endereco(cep, rua, numero)
+    FOREIGN KEY (cep, rua, numero, complemento) REFERENCES Endereco(cep, rua, numero, complemento)
+);
+
+CREATE TABLE Telefone(
+    codigo   NUMBER,
+    telefone VARCHAR2(16) NOT NULL,
+
+    FOREIGN KEY (codigo) REFERENCES Pessoa(codigo),
+    PRIMARY KEY (codigo, telefone)
 );
 
 CREATE TABLE Amizade(
