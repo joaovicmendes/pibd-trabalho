@@ -178,6 +178,20 @@ BEGIN
 
 END;
 
+CREATE OR REPLACE PROCEDURE alterCarro(
+	   a_placa IN VARCHAR2,
+	   a_ano IN NUMBER,
+	   a_modelo IN VARCHAR2,
+	   a_cor IN VARCHAR2)
+IS
+BEGIN
+
+  UPDATE Carro SET ano = a_ano, modelo = a_modelo, cor = a_cor WHERE placa = a_placa;
+    
+  COMMIT;
+
+END;
+
 CREATE OR REPLACE PROCEDURE alterPossui(
 	   a_codigo IN NUMBER,
 	   a_placa IN VARCHAR2)
