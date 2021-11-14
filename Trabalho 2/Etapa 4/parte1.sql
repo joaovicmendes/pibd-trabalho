@@ -85,3 +85,18 @@ BEGIN
   COMMIT;
 
 END;
+
+CREATE OR REPLACE PROCEDURE insertCarro(
+	   i_placa IN VARCHAR2,
+	   i_ano IN NUMBER,
+	   i_modelo IN VARCHAR2,
+	   i_cor IN VARCHAR2)
+IS
+BEGIN
+
+  INSERT INTO Carro (placa, ano, modelo, cor) 
+  VALUES (i_placa, i_ano, i_modelo, i_cor);
+
+  COMMIT;
+
+END;
