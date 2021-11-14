@@ -66,3 +66,22 @@ CREATE SEQUENCE Pessoa_codigo_seq;
 
 ALTER TABLE Pessoa
     ADD (num_carros NUMBER, num_amigos NUMBER);
+    
+---3. Faça um procedimento para cada tabela de seu esquema relacional para que permita a inserção de dados.
+
+CREATE OR REPLACE PROCEDURE insertEndereco(
+	   i_cep IN VARCHAR2,
+	   i_rua IN VARCHAR2,
+	   i_numero IN NUMBER,
+	   i_complemento IN VARCHAR2,
+	   i_cidade IN VARCHAR2,
+	   i_bairro IN VARCHAR2)
+IS
+BEGIN
+
+  INSERT INTO Endereco (cep, rua, numero, complemento, cidade, bairro) 
+  VALUES (i_cep, i_rua, i_numero, i_complemento, i_cidade, i_bairro);
+
+  COMMIT;
+
+END;
