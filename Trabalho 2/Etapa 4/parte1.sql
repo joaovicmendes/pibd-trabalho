@@ -159,3 +159,17 @@ BEGIN
   COMMIT;
 
 END;
+
+---4 Faça um procedimento para cada tabela de seu esquema relacional para que permita a alteração de dados.
+
+CREATE OR REPLACE PROCEDURE alterPossui(
+	   a_codigo IN NUMBER,
+	   a_placa IN VARCHAR2)
+IS
+BEGIN
+
+  UPDATE Possui SET placa = a_placa WHERE codigo = a_codigo;
+    
+  COMMIT;
+
+END;
