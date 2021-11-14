@@ -85,6 +85,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE insertCarro(
 	   i_placa IN VARCHAR2,
@@ -100,6 +101,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE insertPessoa(
 	   i_codigo IN NUMBER,
@@ -119,6 +121,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE insertTelefone(
 	   i_codigo IN NUMBER,
@@ -132,6 +135,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE insertAmizade(
 	   i_codigo_p1 IN NUMBER,
@@ -146,6 +150,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE insertPossui(
 	   i_codigo IN NUMBER,
@@ -159,6 +164,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 ---4 Faça um procedimento para cada tabela de seu esquema relacional para que permita a alteração de dados.
 
@@ -177,6 +183,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE alterCarro(
 	   a_placa IN VARCHAR2,
@@ -191,6 +198,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE alterPessoa(
 	   a_codigo IN NUMBER,
@@ -209,6 +217,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 -- Como alterar telefone se ambas são chaves primárias?
 
@@ -224,6 +233,7 @@ BEGIN
   COMMIT;
 
 END;
+/
 
 CREATE OR REPLACE PROCEDURE alterPossui(
 	   a_codigo IN NUMBER,
@@ -236,3 +246,7 @@ BEGIN
   COMMIT;
 
 END;
+/
+
+---5. Faça uma trigger que use sequências para a inserção das chaves das tuplas de pessoa (disparar antes de inserção na tabela pessoa).
+
