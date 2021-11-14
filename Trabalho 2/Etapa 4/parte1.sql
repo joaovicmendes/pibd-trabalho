@@ -146,3 +146,16 @@ BEGIN
   COMMIT;
 
 END;
+
+CREATE OR REPLACE PROCEDURE insertPossui(
+	   i_codigo IN NUMBER,
+	   i_placa IN VARCHAR2)
+IS
+BEGIN
+
+  INSERT INTO Possui (codigo, placa) 
+  VALUES (i_codigo, i_placa);
+
+  COMMIT;
+
+END;
