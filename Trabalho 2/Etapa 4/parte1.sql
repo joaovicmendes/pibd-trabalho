@@ -132,3 +132,17 @@ BEGIN
   COMMIT;
 
 END;
+
+CREATE OR REPLACE PROCEDURE insertAmizade(
+	   i_codigo_p1 IN NUMBER,
+	   i_codigo_p2 IN NUMBER,
+	   i_dataAmizade in DATE)
+IS
+BEGIN
+
+  INSERT INTO Amizade (codigo_pessoa1, codigo_pessoa2, dataAmizade) 
+  VALUES (i_codigo_p1, i_codigo_p2, i_dataAmizade);
+
+  COMMIT;
+
+END;
