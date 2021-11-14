@@ -162,6 +162,22 @@ END;
 
 ---4 Faça um procedimento para cada tabela de seu esquema relacional para que permita a alteração de dados.
 
+CREATE OR REPLACE PROCEDURE alterEndereco(
+	   a_cep IN VARCHAR2,
+	   a_rua IN VARCHAR2,
+	   a_numero IN NUMBER,
+	   a_complemento IN VARCHAR2,
+	   a_cidade IN VARCHAR2,
+	   a_bairro IN VARCHAR2)
+IS
+BEGIN
+
+  UPDATE Endereco SET cidade = a_cidade, bairro = a_bairro WHERE (cep = a_cep and rua = a_rua and numero = a_numero and complemento = a_complemento);
+    
+  COMMIT;
+
+END;
+
 CREATE OR REPLACE PROCEDURE alterPossui(
 	   a_codigo IN NUMBER,
 	   a_placa IN VARCHAR2)
