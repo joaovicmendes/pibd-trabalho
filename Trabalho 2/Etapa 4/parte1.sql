@@ -100,3 +100,22 @@ BEGIN
   COMMIT;
 
 END;
+
+CREATE OR REPLACE PROCEDURE insertPessoa(
+	   i_codigo IN NUMBER,
+	   i_nome IN VARCHAR2,
+	   i_dataNasc IN DATE,
+	   i_homepage IN VARCHAR2,
+	   i_cep IN VARCHAR2,
+	   i_rua IN VARCHAR2,
+	   i_numero IN NUMBER,
+	   i_complemento IN VARCHAR2)
+IS
+BEGIN
+
+  INSERT INTO Pessoa (codigo, nome, dataNasc, homepage, cep, rua, numero, complemento) 
+  VALUES (i_codigo, i_nome, i_dataNasc, i_homepage, i_cep, i_rua, i_numero, i_complemento);
+
+  COMMIT;
+
+END;
