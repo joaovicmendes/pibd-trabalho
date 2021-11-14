@@ -192,6 +192,39 @@ BEGIN
 
 END;
 
+CREATE OR REPLACE PROCEDURE alterPessoa(
+	   a_codigo IN NUMBER,
+	   a_nome IN VARCHAR2,
+	   a_dataNasc IN DATE,
+	   a_homepage IN VARCHAR2,
+	   a_cep IN VARCHAR2,
+	   a_rua IN VARCHAR2,
+	   a_numero IN NUMBER,
+	   a_complemento IN VARCHAR2)
+IS
+BEGIN
+
+  UPDATE Pessoa SET nome = a_nome, dataNasc = a_dataNasc, homepage = a_homepage, cep = a_cep, rua = a_rua, numero = a_numero, complemento = a_complemento WHERE codigo = a_codigo;
+    
+  COMMIT;
+
+END;
+
+-- Como alterar telefone se ambas são chaves primárias?
+
+CREATE OR REPLACE PROCEDURE alterAmizade(
+	   a_codigo_p1 IN NUMBER,
+	   a_codigo_p2 IN NUMBER,
+	   a_dataA IN DATE)
+IS
+BEGIN
+
+  UPDATE Amizade SET dataAmizade = a_dataA WHERE (codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2);
+    
+  COMMIT;
+
+END;
+
 CREATE OR REPLACE PROCEDURE alterPossui(
 	   a_codigo IN NUMBER,
 	   a_placa IN VARCHAR2)
