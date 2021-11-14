@@ -119,3 +119,16 @@ BEGIN
   COMMIT;
 
 END;
+
+CREATE OR REPLACE PROCEDURE insertTelefone(
+	   i_codigo IN NUMBER,
+	   i_telefone IN VARCHAR2)
+IS
+BEGIN
+
+  INSERT INTO Telefone (codigo, telefone) 
+  VALUES (i_codigo, i_telefone);
+
+  COMMIT;
+
+END;
