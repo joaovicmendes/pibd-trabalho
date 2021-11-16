@@ -259,6 +259,82 @@ END;
 
 -- 6. Faça no mínimo 10 inserts para cada tabela utilizando as procedures criadas.
 
+BEGIN
+insertEndereco('12345678', 'Rua Episcopal', 1000, 'Apto 12', 'São Carlos', 'Centro');
+insertEndereco('23456789', 'Av. da Moda', 34, 'Vazio', 'São Carlos', 'Vila Nery');
+insertEndereco('34567890', 'Av. Brasil', 234, 'São Carlos Clube', 'São Carlos', 'Centro');
+insertEndereco('45678901', 'Rua São João', 987, 'Apto 14', 'Descalvado', 'Algum');
+insertEndereco('56789012', 'Rua Teste', 2343, 'Apto 12C', 'Dourado', 'Jardin Canada');
+insertEndereco('67890123', 'Avenida Exemplo', 4554, 'Apartamento Azul', 'Matão', 'Centro');
+insertEndereco('78901234', 'Rua Cuba', 121, 'String', 'São José dos Campos', 'Novo Mundo');
+insertEndereco('89012345', 'Rua França', 131, 'Complemento', 'Passos', 'Exemplo');
+insertEndereco('90123456', 'Rua', 323, 'Em frente à Farmácia', 'São Caetano', 'Bairro');
+insertEndereco('01234567', 'Endereço', 44, 'Condominio Vila', 'São Paulo', 'Teste');
+
+insertCarro('ABC0001', 2018, 'Onix', 'Branco');
+insertCarro('ABC0002', 2002, 'Jaguar', 'Chumbo');
+insertCarro('ABC0003', 2013, 'Jaguar', 'Preto');
+insertCarro('ABC0004', 2000, 'Corolla', 'Prata');
+insertCarro('ABC0005', 2021, 'X40', 'Prata');
+insertCarro('ABC0006', 2020, 'Ka', 'Preto');
+insertCarro('ABC0007', 2007, 'HB20', 'Branco');
+insertCarro('ABC0008', 2018, 'March', 'Prata');
+insertCarro('ABC0009', 2018, 'April', 'Azul');
+insertCarro('ABC0010', 2013, 'Azul?', 'Vermelho');
+
+insertPessoa('Alice', TO_DATE('2000/09/25', 'yyyy/mm/dd'), 'github.com', '12345678', 'Rua Episcopal', 1000, 'Apto 12');
+insertPessoa('Bob', TO_DATE('1999/06/15', 'yyyy/mm/dd'), 'meusite.com', '23456789', 'Av. da Moda', 34, 'Vazio');
+insertPessoa('Carlos', TO_DATE('1997/10/17', 'yyyy/mm/dd'), 'stackoverlow.com', '34567890', 'Av. Brasil', 234, 'São Carlos Clube');
+insertPessoa('Daniel', TO_DATE('1996/12/27', 'yyyy/mm/dd'), 'facebook.com/Daniel', '45678901', 'Rua São João', 987, 'Apto 14');
+insertPessoa('Eduarda', TO_DATE('2000/11/16', 'yyyy/mm/dd'), 'meusite.com', '56789012', 'Rua Teste', 2343, 'Apto 12C');
+insertPessoa('Fabio Jr', TO_DATE('2001/09/25', 'yyyy/mm/dd'), 'meusite.com', '67890123', 'Avenida Exemplo', 4554, 'Apartamento Azul');
+insertPessoa('Gabriela', TO_DATE('2002/07/29', 'yyyy/mm/dd'), 'meusite.com', '78901234', 'Rua Cuba', 121, 'String');
+insertPessoa('Helena', TO_DATE('1998/05/07', 'yyyy/mm/dd'), 'meusite.com', '89012345', 'Rua França', 131, 'Complemento');
+insertPessoa('Iago', TO_DATE('1999/06/01', 'yyyy/mm/dd'), 'meusite.com', '90123456', 'Rua', 323, 'Em frente à Farmácia');
+insertPessoa('Jonas', TO_DATE('1999/07/15', 'yyyy/mm/dd'), 'meusite.com', '01234567', 'Endereço', 44, 'Condominio Vila');
+
+insertTelefone(1, '35912341234');
+insertTelefone(1, '16912341234');
+insertTelefone(2, '11900000000');
+insertTelefone(2, '11900000001');
+insertTelefone(3, '35912341234');
+insertTelefone(4, '11900000005');
+insertTelefone(5, '11900000006');
+insertTelefone(6, '11900000007');
+insertTelefone(7, '11900000008');
+insertTelefone(7, '35999999999');
+insertTelefone(8, '12901010101');
+insertTelefone(9, '12901010022');
+insertTelefone(10, '11987674532');
+insertTelefone(10, '12999497728');
+
+insertAmizade(1, 2, TO_DATE('2005/01/16', 'yyyy/mm/dd'));
+insertAmizade(1, 4, TO_DATE('2005/01/16', 'yyyy/mm/dd'));
+insertAmizade(2, 4, TO_DATE('2005/01/16', 'yyyy/mm/dd'));
+insertAmizade(3, 7, TO_DATE('2009/07/23', 'yyyy/mm/dd'));
+insertAmizade(3, 8, TO_DATE('2009/07/24', 'yyyy/mm/dd'));
+insertAmizade(3, 10, TO_DATE('2009/07/23', 'yyyy/mm/dd'));
+insertAmizade(7, 8, TO_DATE('2009/07/22', 'yyyy/mm/dd'));
+insertAmizade(7, 10, TO_DATE('2009/07/23', 'yyyy/mm/dd'));
+insertAmizade(10, 1, TO_DATE('2018/03/05', 'yyyy/mm/dd'));
+insertAmizade(10, 2, TO_DATE('2018/03/05', 'yyyy/mm/dd'));
+
+insertPossui(1, 'ABC0001');
+insertPossui(2, 'ABC0002');
+insertPossui(3, 'ABC0003');
+insertPossui(4, 'ABC0004');
+insertPossui(5, 'ABC0005');
+insertPossui(6, 'ABC0006');
+insertPossui(6, 'ABC0007');
+insertPossui(7, 'ABC0006');
+insertPossui(7, 'ABC0007');
+insertPossui(8, 'ABC0008');
+insertPossui(9, 'ABC0009');
+insertPossui(9, 'ABC0010');
+
+END;
+/
+
 -- 7. Faça uma função que retorne o nome da pessoa.
 
 -- 8. Faça uma função que retorne o número de amigos que ela possui.
