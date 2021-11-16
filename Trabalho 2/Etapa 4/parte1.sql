@@ -386,6 +386,22 @@ CREATE OR REPLACE FUNCTION getNumAmigosPessoa
 
 -- 9. Faça um procedimento que atualize os atributos número de amigos de acordo com as informações presentes no banco
 
+CREATE OR REPLACE PROCEDURE atualizaNumAmigos
+    IS
+    num_amigos NUMBER;
+    BEGIN
+    FOR i IN (SELECT codigo FROM Pessoa) LOOP
+        -- Calculando número de amizades
+        SELECT COUNT(*) INTO num_amigos
+        FROM Amizade 
+        WHERE codigo_pessoa1=i.codigo OR codigo_pessoa2=i.codigo;
+
+        -- Atualizando tabela
+        UPDATE Pessoa SET Pessoa.num_amigos=num_amigos WHERE Pessoa.codigo=i.codigo;
+    END LOOP;
+END;
+/
+
 -- 10. Faça um procedimento que atualize o número de pessoas de acordo com as informações presentes no banco.
 
 -- 11. Faça um trigger que atualize automaticamente o número de amigos quando a mesma fizer uma nova amizade ou quando desfizer alguma amizade.
