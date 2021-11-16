@@ -394,8 +394,10 @@ CREATE OR REPLACE FUNCTION getNumAmigosPessoa
 -- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa,  quando a mesma tiver mais um carro ou quando vencder um carro.
 
 -- 13. Faça uma view que retorne todas os nomes das pessoas que não tem amigos.
+
 create or replace view PESSOAS_SEM_AMIGOS as
-select nome Pessoa from Pessoa
-group by nome
-having num_amigos = 0;
+select nome from Pessoa
+where num_amigos = 0;
+/
+
 ---14. Faça uma view que retorne o nome das pessoas que tem o carro modelo ‘Jaguar’ e dos seus amigos.
