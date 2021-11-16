@@ -168,7 +168,10 @@ END;
 ---4 Faça um procedimento para cada tabela de seu esquema relacional para que permita a alteração de dados.
 
 CREATE OR REPLACE PROCEDURE alterEndereco(
-	   a_cep IN VARCHAR2,
+	   o_cep IN VARCHAR2,
+	   o_rua IN VARCHAR2,
+	   o_numero IN NUMBER,
+	   o_complemento IN VARCHAR2,
 	   a_rua IN VARCHAR2,
 	   a_numero IN NUMBER,
 	   a_complemento IN VARCHAR2,
@@ -177,7 +180,19 @@ CREATE OR REPLACE PROCEDURE alterEndereco(
 IS
 BEGIN
 
-  UPDATE Endereco SET cidade = a_cidade, bairro = a_bairro WHERE (cep = a_cep and rua = a_rua and numero = a_numero and complemento = a_complemento);
+  UPDATE Endereco 
+  SET 
+    rua = a_rua,
+    numero = a_numero,
+    complemento = a_complemento,
+    cidade = a_cidade, 
+    bairro = a_bairro 
+  
+  WHERE (
+    cep = o_cep and 
+    rua = o_rua and 
+    numero = o_numero and 
+    complemento = o_complemento);
     
   COMMIT;
 
@@ -218,7 +233,15 @@ BEGIN
 END;
 /
 
--- Como alterar telefone se ambas são chaves primárias?
+CREATE OR REPLACE PROCEDURE alterTelefone( 
+    o_codigotel IN NUMBER, 
+    o_telefone IN VARCHAR2, 
+    a_telefone IN VARCHAR2) 
+IS 
+BEGIN 
+    UPDATE Telefone SET telefone = a_telefone WHERE (codigo = o_codigotel and telefone = o_telefone); 
+    COMMIT; 
+END; 
 
 CREATE OR REPLACE PROCEDURE alterAmizade(
 	   a_codigo_p1 IN NUMBER,
