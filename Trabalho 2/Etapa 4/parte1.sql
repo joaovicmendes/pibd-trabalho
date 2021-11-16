@@ -104,7 +104,6 @@ END;
 /
 
 CREATE OR REPLACE PROCEDURE insertPessoa(
-	   i_codigo IN NUMBER,
 	   i_nome IN VARCHAR2,
 	   i_dataNasc IN DATE,
 	   i_homepage IN VARCHAR2,
@@ -116,7 +115,7 @@ IS
 BEGIN
 
   INSERT INTO Pessoa (codigo, nome, dataNasc, homepage, cep, rua, numero, complemento) 
-  VALUES (i_codigo, i_nome, i_dataNasc, i_homepage, i_cep, i_rua, i_numero, i_complemento);
+  VALUES (0, i_nome, i_dataNasc, i_homepage, i_cep, i_rua, i_numero, i_complemento);
 
   COMMIT;
 
@@ -248,5 +247,30 @@ BEGIN
 END;
 /
 
----5. Faça uma trigger que use sequências para a inserção das chaves das tuplas de pessoa (disparar antes de inserção na tabela pessoa).
+-- 5. Faça uma trigger que use sequências para a inserção das chaves das tuplas de pessoa (disparar antes de inserção na tabela pessoa).
 
+CREATE OR REPLACE TRIGGER onInsertPessoa
+BEFORE INSERT ON Pessoa
+FOR EACH ROW
+BEGIN
+    :NEW.codigo := Pessoa_codigo_seq.nextval;
+END;
+/
+
+-- 6. Faça no mínimo 10 inserts para cada tabela utilizando as procedures criadas.
+
+-- 7. Faça uma função que retorne o nome da pessoa.
+
+-- 8. Faça uma função que retorne o número de amigos que ela possui.
+
+-- 9. Faça um procedimento que atualize os atributos número de amigos de acordo com as informações presentes no banco
+
+-- 10. Faça um procedimento que atualize o número de pessoas de acordo com as informações presentes no banco.
+
+-- 11. Faça um trigger que atualize automaticamente o número de amigos quando a mesma fizer uma nova amizade ou quando desfizer alguma amizade.
+
+-- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa,  quando a mesma tiver mais um carro ou quando vencder um carro.
+
+-- 13. Faça uma view que retorne todas os nomes das pessoas que não tem amigos.
+
+---14. Faça uma view que retorne o nome das pessoas que tem o carro modelo ‘Jaguar’ e dos seus amigos.
