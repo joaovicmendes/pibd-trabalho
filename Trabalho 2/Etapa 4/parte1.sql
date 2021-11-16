@@ -242,6 +242,7 @@ BEGIN
     UPDATE Telefone SET telefone = a_telefone WHERE (codigo = o_codigotel and telefone = o_telefone); 
     COMMIT; 
 END; 
+/
 
 CREATE OR REPLACE PROCEDURE alterAmizade(
 	   a_codigo_p1 IN NUMBER,
