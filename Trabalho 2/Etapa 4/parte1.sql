@@ -337,6 +337,17 @@ END;
 
 -- 7. Faça uma função que retorne o nome da pessoa.
 
+CREATE OR REPLACE FUNCTION getNomePessoa
+  (p_codigo IN NUMBER)
+  RETURN VARCHAR2
+  IS
+    p_nome VARCHAR2(128);
+  BEGIN
+     SELECT nome INTO p_nome FROM Pessoa WHERE codigo = p_codigo;
+     RETURN p_nome;
+  END;
+/
+
 -- 8. Faça uma função que retorne o número de amigos que ela possui.
 
 -- 9. Faça um procedimento que atualize os atributos número de amigos de acordo com as informações presentes no banco
