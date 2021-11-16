@@ -350,6 +350,17 @@ CREATE OR REPLACE FUNCTION getNomePessoa
 
 -- 8. Faça uma função que retorne o número de amigos que ela possui.
 
+CREATE OR REPLACE FUNCTION getNumAmigosPessoa
+  (p_codigo IN NUMBER)
+  RETURN VARCHAR2
+  IS
+    p_num_amigos NUMBER;
+  BEGIN
+     SELECT num_amigos INTO p_num_amigos FROM Pessoa WHERE codigo = p_codigo;
+     RETURN p_num_amigos;
+  END;
+/
+
 -- 9. Faça um procedimento que atualize os atributos número de amigos de acordo com as informações presentes no banco
 
 -- 10. Faça um procedimento que atualize o número de pessoas de acordo com as informações presentes no banco.
