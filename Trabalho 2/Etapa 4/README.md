@@ -3,8 +3,7 @@ Trabalho 2 - Etapa 4: Aplicação dos recursos de PLSQL
 
 Scripts testados num Banco de Dados Oracle, através da plataforma Live SQL. Executar os scripts em ordem:
 1. `1_create.sql`
-2. `2_insert.sql`
-3. `3_plsql.sql`
+2. `2_plsql.sql`
 
 # Grupo
 - [Allan Mansilha Cidreira](https://github.com/AllanMansilha), 760565
