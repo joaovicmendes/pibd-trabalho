@@ -372,6 +372,21 @@ CREATE OR REPLACE FUNCTION getNomePessoa
   END;
 /
 
+-- Utilizando cursor implicito
+
+CREATE OR REPLACE FUNCTION getNomePessoaCursor
+  (p_codigo IN NUMBER)
+  RETURN VARCHAR2
+  IS
+    p_nome VARCHAR2(128);
+  BEGIN
+     SELECT nome INTO p_nome FROM Pessoa WHERE codigo = p_codigo;
+     IF sql%found then RETURN p_nome;
+     ELSE RETURN ('Nenhum usuário encontrado!');
+    END IF;
+  END;
+/
+
 -- 8. Faça uma função que retorne o número de amigos que ela possui.
 
 CREATE OR REPLACE FUNCTION getNumAmigosPessoa
@@ -386,6 +401,7 @@ CREATE OR REPLACE FUNCTION getNumAmigosPessoa
 /
 
 -- 9. Faça um procedimento que atualize os atributos número de amigos de acordo com as informações presentes no banco
+-- Utilizando cursor explicito
 CREATE OR REPLACE PROCEDURE atualizaNumAmigos
     IS
     new_num_amigos NUMBER;
