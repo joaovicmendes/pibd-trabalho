@@ -449,6 +449,15 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER onDeleteAmizade
+BEFORE DELETE ON Amizade
+FOR EACH ROW
+BEGIN
+    UPDATE Pessoa SET num_amigos=(num_amigos-1) WHERE codigo=:OLD.codigo_pessoa1;
+    UPDATE Pessoa SET num_amigos=(num_amigos-1) WHERE codigo=:OLD.codigo_pessoa2;
+END;
+/
+
 -- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa,  quando a mesma tiver mais um carro ou quando vencder um carro.
 
 -- 13. Faça uma view que retorne todas os nomes das pessoas que não tem amigos.
