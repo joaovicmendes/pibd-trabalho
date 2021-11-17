@@ -423,6 +423,15 @@ END;
 
 -- 11. Faça um trigger que atualize automaticamente o número de amigos quando a mesma fizer uma nova amizade ou quando desfizer alguma amizade.
 
+CREATE OR REPLACE TRIGGER onInsertAmizade
+BEFORE INSERT ON Amizade
+FOR EACH ROW
+BEGIN
+    UPDATE Pessoa SET num_amigos=(num_amigos+1) WHERE codigo=:NEW.codigo_pessoa1;
+    UPDATE Pessoa SET num_amigos=(num_amigos+1) WHERE codigo=:NEW.codigo_pessoa2;
+END;
+/
+
 -- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa,  quando a mesma tiver mais um carro ou quando vencder um carro.
 
 -- 13. Faça uma view que retorne todas os nomes das pessoas que não tem amigos.
@@ -433,3 +442,11 @@ where num_amigos = 0;
 /
 
 ---14. Faça uma view que retorne o nome das pessoas que tem o carro modelo ‘Jaguar’ e dos seus amigos.
+SELECT UNIQUE nome, codigo
+FROM (
+  (SELECT nome, codigo FROM Pessoa NATURAL JOIN Possui NATURAL JOIN Carro WHERE modelo='Jaguar'
+  JOIN Amizade ON codigo=codigo_pessoa1)
+  UNION
+  (SELECT nome, codigo FROM Pessoa NATURAL JOIN Possui NATURAL JOIN Carro WHERE modelo='Jaguar'
+  JOIN Amizade ON codigo=codigo_pessoa2)
+);
