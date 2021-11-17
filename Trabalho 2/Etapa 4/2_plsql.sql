@@ -182,10 +182,43 @@ BEGIN
 
   UPDATE Amizade
   SET dataAmizade = a_dataA
-  WHERE (codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2);
+  WHERE (codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2) OR (codigo_pessoa2 = a_codigo_p1 and codigo_pessoa1 = a_codigo_p2);
     
   COMMIT;
 
+END;
+/
+
+-- Utilizando cursor explícito com parâmetros
+
+CREATE OR REPLACE PROCEDURE alterAmizadeCursor(
+	   a_codigo_p1 IN NUMBER,
+	   a_codigo_p2 IN NUMBER,
+	   a_dataA IN DATE)
+IS
+        data_antiga DATE;
+        cursor camizade (a_codigo_p1 IN NUMBER, a_codigo_p2 IN NUMBER) IS 
+            SELECT dataAmizade FROM Amizade 
+	    WHERE ((codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2) 
+		   or 
+		   (codigo_pessoa1 = a_codigo_p2 and codigo_pessoa2 = a_codigo_p1));
+BEGIN
+    OPEN camizade(a_codigo_p1, a_codigo_p2);
+      FETCH camizade into data_antiga;
+      
+      IF camizade%found THEN
+        UPDATE Amizade SET dataAmizade = a_dataA 
+	WHERE ((codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2) 
+	       or 
+	       (codigo_pessoa1 = a_codigo_p2 and codigo_pessoa2 = a_codigo_p1));
+        COMMIT;
+        dbms_output.put_line ('Data de amizade alterada de ' || data_antiga || ' para ' || a_dataA);
+      
+      ELSE
+        dbms_output.put_line ('Codigos de amizade não encontrados');
+      
+      END IF;
+    CLOSE camizade;
 END;
 /
 
