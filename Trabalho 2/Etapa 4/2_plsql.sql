@@ -440,3 +440,56 @@ from
         ) join Pessoa on codigo=codigo_pessoa2
     )
 );
+
+-- Extra: Criando uma situação para passar um cursor como parâmetro
+-- Situação: o usuário tomou uma multa no nome dele e quer saber quem foi. Escolhe exibir todas as ruas e quem mora nelas ou todas as placas salvas
+
+CREATE OR REPLACE FUNCTION Multado(
+	   comando IN VARCHAR2)
+	   RETURN SYS_REFCURSOR
+IS
+    l_return SYS_REFCURSOR;
+BEGIN
+  CASE comando 
+  WHEN 'RUAS' THEN
+    OPEN l_return FOR
+        SELECT nome, rua FROM Pessoa ORDER BY codigo;
+  WHEN 'PLACAS' THEN
+    OPEN l_return FOR
+        SELECT placa FROM Possui ORDER BY codigo;
+  END CASE;
+  
+  RETURN l_return;
+END;
+/
+
+-- Exemplificando caso de uso 1: Quando o usuário escolhe exibir ruas e nomes dos moradores
+
+DECLARE
+    nomes SYS_REFCURSOR;
+    nome VARCHAR2 (3248);
+    ruas VARCHAR2 (3248);
+BEGIN
+    nomes:= Multado('RUAS');
+    LOOP
+    FETCH nomes INTO nome, ruas;
+    EXIT WHEN nomes%notfound;
+    dbms_output.put_line(nome || ' - ' || ruas);
+    END LOOP;
+    CLOSE nomes;
+END;
+
+-- Exemplificando caso de uso 2: Quando o usuário escolhe exibir as placas dos meliantes
+
+DECLARE
+    nomes SYS_REFCURSOR;
+    placas VARCHAR2 (3248);
+BEGIN
+    nomes:= Multado('PLACAS');
+    LOOP
+    FETCH nomes INTO placas;
+    EXIT WHEN nomes%notfound;
+    dbms_output.put_line(placas);
+    END LOOP;
+    CLOSE nomes;
+END;
