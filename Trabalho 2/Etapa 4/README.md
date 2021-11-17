@@ -1,8 +1,9 @@
 # Projeto e Implementação de Bancos de Dados (1001546)
-Trabalho 2 - Etapa 4: PL SQL
+Trabalho 2 - Etapa 4: Aplicação dos recursos de PLSQL
 
 Scripts testados num Banco de Dados Oracle, através da plataforma Live SQL. Executar os scripts em ordem:
-1. `parte1.sql`
+1. `1_create.sql`
+2. `2_plsql.sql`
 
 Atenção: diversas funções retornam o número de amigos e de carros de uma pessoa. Quando a tabela foi alterada para adicionar essas colunas, o valor padrão é `null`. Assim, idealmente os procedimentos `atualizarNumAmigos()` e `atualizarNumCarros()` devem ser executados para manter o sistema consistente (e fazer com que os triggers não somem/subtraiam de `null`) antes de demais alterações/querys/comandos.
 
