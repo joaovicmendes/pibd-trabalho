@@ -1,14 +1,11 @@
----1. Crie uma sequência para o código da pessoa.
-
+-- 1. Crie uma sequência para o código da pessoa.
 CREATE SEQUENCE Pessoa_codigo_seq;
 
----2. Altere a tabela da pessoa adicionando um atributo que conta o número de carros da pessoa, e adicionando um atributo que conta o número de amigos da pessoa. Ambos os atributos devem ser inteiros.
-
+-- 2. Altere a tabela da pessoa adicionando um atributo que conta o número de carros da pessoa, e adicionando um atributo que conta o número de amigos da pessoa. Ambos os atributos devem ser inteiros.
 ALTER TABLE Pessoa
     ADD (num_carros NUMBER, num_amigos NUMBER);
     
----3. Faça um procedimento para cada tabela de seu esquema relacional para que permita a inserção de dados.
-
+-- 3. Faça um procedimento para cada tabela de seu esquema relacional para que permita a inserção de dados.
 CREATE OR REPLACE PROCEDURE insertEndereco(
 	   i_cep IN VARCHAR2,
 	   i_rua IN VARCHAR2,
@@ -18,12 +15,10 @@ CREATE OR REPLACE PROCEDURE insertEndereco(
 	   i_bairro IN VARCHAR2)
 IS
 BEGIN
-
   INSERT INTO Endereco (cep, rua, numero, complemento, cidade, bairro) 
   VALUES (i_cep, i_rua, i_numero, i_complemento, i_cidade, i_bairro);
 
   COMMIT;
-
 END;
 /
 
@@ -34,12 +29,10 @@ CREATE OR REPLACE PROCEDURE insertCarro(
 	   i_cor IN VARCHAR2)
 IS
 BEGIN
-
   INSERT INTO Carro (placa, ano, modelo, cor) 
   VALUES (i_placa, i_ano, i_modelo, i_cor);
 
   COMMIT;
-
 END;
 /
 
@@ -53,12 +46,10 @@ CREATE OR REPLACE PROCEDURE insertPessoa(
 	   i_complemento IN VARCHAR2)
 IS
 BEGIN
-
   INSERT INTO Pessoa (codigo, nome, dataNasc, homepage, cep, rua, numero, complemento) 
   VALUES (0, i_nome, i_dataNasc, i_homepage, i_cep, i_rua, i_numero, i_complemento);
 
   COMMIT;
-
 END;
 /
 
@@ -67,12 +58,10 @@ CREATE OR REPLACE PROCEDURE insertTelefone(
 	   i_telefone IN VARCHAR2)
 IS
 BEGIN
-
   INSERT INTO Telefone (codigo, telefone) 
   VALUES (i_codigo, i_telefone);
 
   COMMIT;
-
 END;
 /
 
@@ -82,12 +71,10 @@ CREATE OR REPLACE PROCEDURE insertAmizade(
 	   i_dataAmizade in DATE)
 IS
 BEGIN
-
   INSERT INTO Amizade (codigo_pessoa1, codigo_pessoa2, dataAmizade) 
   VALUES (i_codigo_p1, i_codigo_p2, i_dataAmizade);
 
   COMMIT;
-
 END;
 /
 
@@ -96,17 +83,14 @@ CREATE OR REPLACE PROCEDURE insertPossui(
 	   i_placa IN VARCHAR2)
 IS
 BEGIN
-
   INSERT INTO Possui (codigo, placa) 
   VALUES (i_codigo, i_placa);
 
   COMMIT;
-
 END;
 /
 
----4 Faça um procedimento para cada tabela de seu esquema relacional para que permita a alteração de dados.
-
+-- 4 Faça um procedimento para cada tabela de seu esquema relacional para que permita a alteração de dados.
 CREATE OR REPLACE PROCEDURE alterEndereco(
 	   o_cep IN VARCHAR2,
 	   o_rua IN VARCHAR2,
@@ -119,7 +103,6 @@ CREATE OR REPLACE PROCEDURE alterEndereco(
 	   a_bairro IN VARCHAR2)
 IS
 BEGIN
-
   UPDATE Endereco 
   SET 
     rua = a_rua,
@@ -127,15 +110,14 @@ BEGIN
     complemento = a_complemento,
     cidade = a_cidade, 
     bairro = a_bairro 
-  
   WHERE (
     cep = o_cep and 
     rua = o_rua and 
     numero = o_numero and 
-    complemento = o_complemento);
+    complemento = o_complemento
+  );
     
   COMMIT;
-
 END;
 /
 
@@ -146,11 +128,9 @@ CREATE OR REPLACE PROCEDURE alterCarro(
 	   a_cor IN VARCHAR2)
 IS
 BEGIN
-
   UPDATE Carro SET ano = a_ano, modelo = a_modelo, cor = a_cor WHERE placa = a_placa;
     
   COMMIT;
-
 END;
 /
 
@@ -165,11 +145,17 @@ CREATE OR REPLACE PROCEDURE alterPessoa(
 	   a_complemento IN VARCHAR2)
 IS
 BEGIN
-
-  UPDATE Pessoa SET nome = a_nome, dataNasc = a_dataNasc, homepage = a_homepage, cep = a_cep, rua = a_rua, numero = a_numero, complemento = a_complemento WHERE codigo = a_codigo;
+  UPDATE Pessoa
+  SET nome = a_nome,
+    dataNasc = a_dataNasc,
+    homepage = a_homepage,
+    cep = a_cep,
+    rua = a_rua,
+    numero = a_numero,
+    complemento = a_complemento
+  WHERE codigo = a_codigo;
     
   COMMIT;
-
 END;
 /
 
@@ -179,7 +165,10 @@ CREATE OR REPLACE PROCEDURE alterTelefone(
     a_telefone IN VARCHAR2) 
 IS 
 BEGIN 
-    UPDATE Telefone SET telefone = a_telefone WHERE (codigo = o_codigotel and telefone = o_telefone); 
+    UPDATE Telefone
+    SET telefone = a_telefone
+    WHERE (codigo = o_codigotel and telefone = o_telefone); 
+
     COMMIT; 
 END; 
 /
@@ -191,7 +180,9 @@ CREATE OR REPLACE PROCEDURE alterAmizade(
 IS
 BEGIN
 
-  UPDATE Amizade SET dataAmizade = a_dataA WHERE (codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2);
+  UPDATE Amizade
+  SET dataAmizade = a_dataA
+  WHERE (codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2);
     
   COMMIT;
 
@@ -203,16 +194,15 @@ CREATE OR REPLACE PROCEDURE alterPossui(
 	   a_placa IN VARCHAR2)
 IS
 BEGIN
-
-  UPDATE Possui SET placa = a_placa WHERE codigo = a_codigo;
+  UPDATE Possui
+  SET placa = a_placa
+  WHERE codigo = a_codigo;
     
   COMMIT;
-
 END;
 /
 
 -- 5. Faça uma trigger que use sequências para a inserção das chaves das tuplas de pessoa (disparar antes de inserção na tabela pessoa).
-
 CREATE OR REPLACE TRIGGER onInsertPessoa
 BEFORE INSERT ON Pessoa
 FOR EACH ROW
@@ -222,7 +212,6 @@ END;
 /
 
 -- 6. Faça no mínimo 10 inserts para cada tabela utilizando as procedures criadas.
-
 BEGIN
 insertEndereco('12345678', 'Rua Episcopal', 1000, 'Apto 12', 'São Carlos', 'Centro');
 insertEndereco('23456789', 'Av. da Moda', 34, 'Vazio', 'São Carlos', 'Vila Nery');
@@ -295,25 +284,25 @@ insertPossui(7, 'ABC0007');
 insertPossui(8, 'ABC0008');
 insertPossui(9, 'ABC0009');
 insertPossui(9, 'ABC0010');
-
 END;
 /
 
 -- 7. Faça uma função que retorne o nome da pessoa.
-
 CREATE OR REPLACE FUNCTION getNomePessoa
   (p_codigo IN NUMBER)
   RETURN VARCHAR2
   IS
     p_nome VARCHAR2(128);
   BEGIN
-     SELECT nome INTO p_nome FROM Pessoa WHERE codigo = p_codigo;
+     SELECT nome INTO p_nome
+     FROM Pessoa
+     WHERE codigo = p_codigo;
+
      RETURN p_nome;
   END;
 /
 
 -- Utilizando cursor implicito
-
 CREATE OR REPLACE FUNCTION getNomePessoaCursor
   (p_codigo IN NUMBER)
   RETURN VARCHAR2
@@ -328,7 +317,6 @@ CREATE OR REPLACE FUNCTION getNomePessoaCursor
 /
 
 -- 8. Faça uma função que retorne o número de amigos que ela possui.
-
 CREATE OR REPLACE FUNCTION getNumAmigosPessoa
   (p_codigo IN NUMBER)
   RETURN VARCHAR2
@@ -377,7 +365,6 @@ END;
 /
 
 -- 10. Faça um procedimento que atualize o número de pessoas de acordo com as informações presentes no banco.
-
 CREATE OR REPLACE PROCEDURE atualizaNumCarros
     IS
     new_num_carros NUMBER;
@@ -395,7 +382,6 @@ END;
 /
 
 -- 11. Faça um trigger que atualize automaticamente o número de amigos quando a mesma fizer uma nova amizade ou quando desfizer alguma amizade.
-
 CREATE OR REPLACE TRIGGER onChangeAmizade
 BEFORE INSERT OR DELETE ON Amizade
 FOR EACH ROW
@@ -411,7 +397,6 @@ END;
 /
 
 -- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa, quando a mesma tiver mais um carro ou quando vencder um carro.
-
 CREATE OR REPLACE TRIGGER onChangePossui
 BEFORE INSERT OR DELETE ON Possui
 FOR EACH ROW
@@ -425,13 +410,12 @@ END;
 /
 
 -- 13. Faça uma view que retorne todas os nomes das pessoas que não tem amigos.
-
 create or replace view PESSOAS_SEM_AMIGOS as
 select nome from Pessoa
 where num_amigos = 0;
 /
 
----14. Faça uma view que retorne o nome das pessoas que tem o carro modelo ‘Jaguar’ e dos seus amigos.
+-- 14. Faça uma view que retorne o nome das pessoas que tem o carro modelo ‘Jaguar’ e dos seus amigos.
 create or replace view PESSOAS_COM_JAGUAR_AND_FRIENDS as
 select nome 
 from
