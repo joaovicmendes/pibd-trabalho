@@ -492,6 +492,7 @@ where num_amigos = 0;
 /
 
 ---14. Faça uma view que retorne o nome das pessoas que tem o carro modelo ‘Jaguar’ e dos seus amigos.
+create or replace view PESSOAS_COM_JAGUAR_AND_FRIENDS as
 select nome 
 from
 (
