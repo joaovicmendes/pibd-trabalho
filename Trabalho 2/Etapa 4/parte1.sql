@@ -440,39 +440,31 @@ END;
 
 -- 11. Faça um trigger que atualize automaticamente o número de amigos quando a mesma fizer uma nova amizade ou quando desfizer alguma amizade.
 
-CREATE OR REPLACE TRIGGER onInsertAmizade
-BEFORE INSERT ON Amizade
+CREATE OR REPLACE TRIGGER onChangeAmizade
+BEFORE INSERT OR DELETE ON Amizade
 FOR EACH ROW
 BEGIN
-    UPDATE Pessoa SET num_amigos=(num_amigos+1) WHERE codigo=:NEW.codigo_pessoa1;
-    UPDATE Pessoa SET num_amigos=(num_amigos+1) WHERE codigo=:NEW.codigo_pessoa2;
-END;
-/
-
-CREATE OR REPLACE TRIGGER onDeleteAmizade
-BEFORE DELETE ON Amizade
-FOR EACH ROW
-BEGIN
-    UPDATE Pessoa SET num_amigos=(num_amigos-1) WHERE codigo=:OLD.codigo_pessoa1;
-    UPDATE Pessoa SET num_amigos=(num_amigos-1) WHERE codigo=:OLD.codigo_pessoa2;
+  IF INSERTING THEN
+      UPDATE Pessoa SET num_amigos=(num_amigos+1) WHERE codigo=:NEW.codigo_pessoa1;
+      UPDATE Pessoa SET num_amigos=(num_amigos+1) WHERE codigo=:NEW.codigo_pessoa2;
+  ELSIF DELETING THEN
+      UPDATE Pessoa SET num_amigos=(num_amigos-1) WHERE codigo=:OLD.codigo_pessoa1;
+      UPDATE Pessoa SET num_amigos=(num_amigos-1) WHERE codigo=:OLD.codigo_pessoa2;
+  END IF;
 END;
 /
 
 -- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa, quando a mesma tiver mais um carro ou quando vencder um carro.
 
-CREATE OR REPLACE TRIGGER onInsertPossui
-BEFORE INSERT ON Possui
+CREATE OR REPLACE TRIGGER onChangePossui
+BEFORE INSERT OR DELETE ON Possui
 FOR EACH ROW
 BEGIN
+  IF INSERTING THEN
     UPDATE Pessoa SET num_carros=(num_carros+1) WHERE codigo=:NEW.codigo;
-END;
-/
-
-CREATE OR REPLACE TRIGGER onDeletePossui
-BEFORE DELETE ON Possui
-FOR EACH ROW
-BEGIN
+  ELSIF DELETING THEN
     UPDATE Pessoa SET num_carros=(num_carros-1) WHERE codigo=:OLD.codigo;
+  END IF;
 END;
 /
 
