@@ -458,7 +458,23 @@ BEGIN
 END;
 /
 
--- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa,  quando a mesma tiver mais um carro ou quando vencder um carro.
+-- 12.  Faça um trigger que atualize automaticamenteo número de carros da pessoa, quando a mesma tiver mais um carro ou quando vencder um carro.
+
+CREATE OR REPLACE TRIGGER onInsertPossui
+BEFORE INSERT ON Possui
+FOR EACH ROW
+BEGIN
+    UPDATE Pessoa SET num_carros=(num_carros+1) WHERE codigo=:NEW.codigo;
+END;
+/
+
+CREATE OR REPLACE TRIGGER onDeletePossui
+BEFORE DELETE ON Possui
+FOR EACH ROW
+BEGIN
+    UPDATE Pessoa SET num_carros=(num_carros-1) WHERE codigo=:OLD.codigo;
+END;
+/
 
 -- 13. Faça uma view que retorne todas os nomes das pessoas que não tem amigos.
 
