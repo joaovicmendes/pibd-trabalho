@@ -476,3 +476,26 @@ where num_amigos = 0;
 /
 
 ---14. Faça uma view que retorne o nome das pessoas que tem o carro modelo ‘Jaguar’ e dos seus amigos.
+select nome 
+from
+(
+    select unique nome, codigo
+    from 
+    ( -- donos de jaguar
+        select nome, codigo 
+        from Pessoa 
+            natural join Possui
+            natural join (select * from Carro where modelo='Jaguar')
+    )
+    union
+    ( -- amigos deles
+        select nome, codigo
+        from (
+            select codigo_pessoa2
+            from Pessoa
+                natural join Possui
+                natural join (select * from Carro where modelo='Jaguar')
+                join Amizade on codigo_pessoa1=codigo
+        ) join Pessoa on codigo=codigo_pessoa2
+    )
+);
