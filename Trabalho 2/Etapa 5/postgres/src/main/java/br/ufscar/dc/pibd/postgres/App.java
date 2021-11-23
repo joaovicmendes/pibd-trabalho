@@ -40,6 +40,14 @@ public class App {
     JTextArea addCarroTextArea;
 
     // Add Pessoa
+    JLabel pessoaCodigo;
+    JTextField pessoaCodigoText;
+
+    // Add Possui
+    JPanel possuiPanel;
+    JButton addPossui;
+    JButton addPossuiConfirm;
+    JTextArea addPossuiTextArea;
 
     App() {
         // Layout principal
@@ -55,9 +63,15 @@ public class App {
 
         // MenuBar
         panelButtons = new JPanel();
+        panelButtons.setLayout(new GridLayout(5, 1));
+
         addCarro = new JButton("Adicionar Carro");
         addCarro.addActionListener(onButtonClicked);
         panelButtons.add(addCarro);
+
+        addPossui = new JButton("Registrar Proprietário");
+        addPossui.addActionListener(onButtonClicked);
+        panelButtons.add(addPossui);
 
         // Botões para escolher se a busca é por Pessoa (código) ou Carro (placa)
         buttonGroup = new ButtonGroup();
@@ -124,6 +138,12 @@ public class App {
                 String modelo = carroModeloText.getText();
                 String cor = carroCorText.getText();
                 addCarroTextArea.setText(InsertCarro.insert(placa, ano, modelo, cor));
+            } else if (e.getSource() == addPossui) {
+                setupAddPossui();
+            } else if (e.getSource() == addPossuiConfirm) {
+                String codigo = pessoaCodigoText.getText();
+                String placa = carroPlacaText.getText();
+                addPossuiTextArea.setText(InsertPossui.insert(codigo, placa));
             }
         }
     }
@@ -164,6 +184,37 @@ public class App {
 
         secondaryFrame.getContentPane().add(BorderLayout.CENTER, carroPanel);
         secondaryFrame.getContentPane().add(BorderLayout.SOUTH, addCarroTextArea);
+
+        secondaryFrame.setVisible(true);
+        mainFrame.setVisible(false);
+    }
+
+    private void setupAddPossui() {
+        secondaryFrame.dispose();
+        gridLayout = new GridLayout(3, 2);
+        addPossuiTextArea = new JTextArea();
+        addPossuiTextArea.setEditable(false);
+
+        possuiPanel = new JPanel();
+        possuiPanel.setLayout(gridLayout);
+
+        carroPlaca = new JLabel("Placa");
+        carroPlacaText = new JTextField(7);
+        possuiPanel.add(carroPlaca);
+        possuiPanel.add(carroPlacaText);
+
+        pessoaCodigo = new JLabel("Código Proprietário");
+        pessoaCodigoText = new JTextField(4);
+        possuiPanel.add(pessoaCodigo);
+        possuiPanel.add(pessoaCodigoText);
+
+        addPossuiConfirm = new JButton("Registrar");
+        addPossuiConfirm.addActionListener(new OnButtonClicked());
+        possuiPanel.add(addCancel);
+        possuiPanel.add(addPossuiConfirm);
+
+        secondaryFrame.getContentPane().add(BorderLayout.CENTER, possuiPanel);
+        secondaryFrame.getContentPane().add(BorderLayout.SOUTH, addPossuiTextArea);
 
         secondaryFrame.setVisible(true);
         mainFrame.setVisible(false);
