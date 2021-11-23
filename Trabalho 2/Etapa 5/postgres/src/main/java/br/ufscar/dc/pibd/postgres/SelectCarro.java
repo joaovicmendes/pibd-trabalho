@@ -25,7 +25,7 @@ public class SelectCarro {
                 result.append(" Ano: ").append(resultSet.getString("ano")).append("\n");
                 result.append(" Modelo: ").append(resultSet.getString("modelo")).append("\n");
                 result.append(" Cor: ").append(resultSet.getString("cor")).append("\n");
-                result.append(" Dono:\n" );
+                result.append(" Proprietário(a):\n" );
                 result.append("   Código: ").append(resultSet.getString("codigo")).append("\n");
                 result.append("   Nome: ").append(resultSet.getString("nome")).append("\n\n");
             }
