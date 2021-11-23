@@ -182,10 +182,43 @@ BEGIN
 
   UPDATE Amizade
   SET dataAmizade = a_dataA
-  WHERE (codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2);
+  WHERE (codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2) OR (codigo_pessoa2 = a_codigo_p1 and codigo_pessoa1 = a_codigo_p2);
     
   COMMIT;
 
+END;
+/
+
+-- Utilizando cursor explícito com parâmetros
+
+CREATE OR REPLACE PROCEDURE alterAmizadeCursor(
+	   a_codigo_p1 IN NUMBER,
+	   a_codigo_p2 IN NUMBER,
+	   a_dataA IN DATE)
+IS
+        data_antiga DATE;
+        cursor camizade (a_codigo_p1 IN NUMBER, a_codigo_p2 IN NUMBER) IS 
+            SELECT dataAmizade FROM Amizade 
+	    WHERE ((codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2) 
+		   or 
+		   (codigo_pessoa1 = a_codigo_p2 and codigo_pessoa2 = a_codigo_p1));
+BEGIN
+    OPEN camizade(a_codigo_p1, a_codigo_p2);
+      FETCH camizade into data_antiga;
+      
+      IF camizade%found THEN
+        UPDATE Amizade SET dataAmizade = a_dataA 
+	WHERE ((codigo_pessoa1 = a_codigo_p1 and codigo_pessoa2 = a_codigo_p2) 
+	       or 
+	       (codigo_pessoa1 = a_codigo_p2 and codigo_pessoa2 = a_codigo_p1));
+        COMMIT;
+        dbms_output.put_line ('Data de amizade alterada de ' || data_antiga || ' para ' || a_dataA);
+      
+      ELSE
+        dbms_output.put_line ('Codigos de amizade não encontrados');
+      
+      END IF;
+    CLOSE camizade;
 END;
 /
 
@@ -440,3 +473,56 @@ from
         ) join Pessoa on codigo=codigo_pessoa2
     )
 );
+
+-- Extra: Criando uma situação para passar um cursor como parâmetro
+-- Situação: o usuário tomou uma multa no nome dele e quer saber quem foi. Escolhe exibir todas as ruas e quem mora nelas ou todas as placas salvas
+
+CREATE OR REPLACE FUNCTION Multado(
+	   comando IN VARCHAR2)
+	   RETURN SYS_REFCURSOR
+IS
+    l_return SYS_REFCURSOR;
+BEGIN
+  CASE comando 
+  WHEN 'RUAS' THEN
+    OPEN l_return FOR
+        SELECT nome, rua FROM Pessoa ORDER BY codigo;
+  WHEN 'PLACAS' THEN
+    OPEN l_return FOR
+        SELECT placa FROM Possui ORDER BY codigo;
+  END CASE;
+  
+  RETURN l_return;
+END;
+/
+
+-- Exemplificando caso de uso 1: Quando o usuário escolhe exibir ruas e nomes dos moradores
+
+DECLARE
+    nomes SYS_REFCURSOR;
+    nome VARCHAR2 (3248);
+    ruas VARCHAR2 (3248);
+BEGIN
+    nomes:= Multado('RUAS');
+    LOOP
+    FETCH nomes INTO nome, ruas;
+    EXIT WHEN nomes%notfound;
+    dbms_output.put_line(nome || ' - ' || ruas);
+    END LOOP;
+    CLOSE nomes;
+END;
+
+-- Exemplificando caso de uso 2: Quando o usuário escolhe exibir as placas dos meliantes
+
+DECLARE
+    nomes SYS_REFCURSOR;
+    placas VARCHAR2 (3248);
+BEGIN
+    nomes:= Multado('PLACAS');
+    LOOP
+    FETCH nomes INTO placas;
+    EXIT WHEN nomes%notfound;
+    dbms_output.put_line(placas);
+    END LOOP;
+    CLOSE nomes;
+END;
