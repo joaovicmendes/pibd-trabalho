@@ -37,6 +37,7 @@ public class App {
     JLabel carroCor;
     JTextField carroCorText;
     JButton addCarroConfirm;
+    JTextArea addCarroTextArea;
 
     // Add Pessoa
 
@@ -117,6 +118,12 @@ public class App {
                 secondaryFrame.dispose();
             } else if (e.getSource() == addCarro) {
                 setupAddCarro();
+            } else if (e.getSource() == addCarroConfirm) {
+                String placa = carroPlacaText.getText();
+                String ano = carroAnoText.getText();
+                String modelo = carroModeloText.getText();
+                String cor = carroCorText.getText();
+                addCarroTextArea.setText(InsertCarro.insert(placa, ano, modelo, cor));
             }
         }
     }
@@ -124,6 +131,8 @@ public class App {
     private void setupAddCarro() {
         secondaryFrame.dispose();
         gridLayout = new GridLayout(5, 2);
+        addCarroTextArea = new JTextArea();
+        addCarroTextArea.setEditable(false);
 
         carroPanel = new JPanel();
         carroPanel.setLayout(gridLayout);
@@ -149,10 +158,12 @@ public class App {
         carroPanel.add(carroCorText);
 
         addCarroConfirm = new JButton("Adicionar");
+        addCarroConfirm.addActionListener(new OnButtonClicked());
         carroPanel.add(addCancel);
         carroPanel.add(addCarroConfirm);
 
         secondaryFrame.getContentPane().add(BorderLayout.CENTER, carroPanel);
+        secondaryFrame.getContentPane().add(BorderLayout.SOUTH, addCarroTextArea);
 
         secondaryFrame.setVisible(true);
         mainFrame.setVisible(false);
