@@ -6,7 +6,7 @@ Para inicializar o banco, é preciso ter instalado o `docker` e o `docker-compos
 docker-compose up
 ```
 
-Para popular, é preciso executar os scripts em ordem:
+Para popular o banco de dados, é preciso executar os scripts em ordem (recomendamos o DBeaver para fazer a conexão):
 1. `1_create.sql`
 2. `2_plsql.sql`
 

@@ -1,3 +1,4 @@
+CREATE DATABASE agenda_telefonica;
 -- Criando tabelas
 CREATE TABLE Endereco(
     cep         VARCHAR(9),
