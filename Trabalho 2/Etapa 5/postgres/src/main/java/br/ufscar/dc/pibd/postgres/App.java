@@ -219,4 +219,60 @@ public class App {
         secondaryFrame.setVisible(true);
         mainFrame.setVisible(false);
     }
+    
+        private void setupAddPessoa() {
+        secondaryFrame.dispose();
+        gridLayout = new GridLayout(3, 2);
+        addPessoaTextArea = new JTextArea();
+        addPessoaTextArea.setEditable(false);
+
+        pessoaPanel = new JPanel();
+        pessoaPanel.setLayout(gridLayout);
+
+        pessoaNome = new JLabel("Nome Pessoa");
+        pessoaPessoaText = new JTextField(100);
+        pessoaPanel.add(pessoaNome);
+        pessoaPanel.add(pessoaCodigoText);            
+        
+        pessoaDataNasc = new JLabel("Data de Nascimento");
+        pessoaPessoaText = new JTextField(100);
+        pessoaPanel.add(pessoaDataNasc);
+        pessoaPanel.add(pessoaDataNascText);
+        
+        pessoaHomepage = new JLabel("Homepage");
+        pessoaPessoaText = new JTextField(100);
+        pessoaPanel.add(pessoaHomepage);
+        pessoaPanel.add(pessoaHomepageText);
+        
+        pessoaCep = new JLabel("Cep");
+        pessoaPessoaText = new JTextField(9);
+        pessoaPanel.add(pessoaCep);
+        pessoaPanel.add(pessoaCepText);
+        
+        pessoaRua = new JLabel("Rua");
+        pessoaPessoaText = new JTextField(100);
+        pessoaPanel.add(pessoaRua);
+        pessoaPanel.add(pessoaRuaText);
+        
+        pessoaNumero = new JLabel("Numero");
+        pessoaPessoaText = new JTextField(6);
+        pessoaPanel.add(pessoaNumero);
+        pessoaPanel.add(pessoaNumeroText);
+        
+        pessoaComplemento = new JLabel("Complemento");
+        pessoaPessoaText = new JTextField(100);
+        pessoaPanel.add(pessoaComplemento);
+        pessoaPanel.add(pessoaComplementoText);
+
+        addPessoaConfirm = new JButton("Registrar");
+        addPessoaConfirm.addActionListener(new OnButtonClicked());
+        pessoaPanel.add(addCancel);
+        pessoaPanel.add(addPessoaConfirm);
+
+        secondaryFrame.getContentPane().add(BorderLayout.CENTER, pessoaPanel);
+        secondaryFrame.getContentPane().add(BorderLayout.SOUTH, addPessoaTextArea);
+
+        secondaryFrame.setVisible(true);
+        mainFrame.setVisible(false);
+    }
 }
