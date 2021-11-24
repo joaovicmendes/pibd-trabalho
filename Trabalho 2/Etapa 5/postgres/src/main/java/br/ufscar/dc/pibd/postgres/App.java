@@ -49,6 +49,15 @@ public class App {
     JButton addPossuiConfirm;
     JTextArea addPossuiTextArea;
 
+    // Add Telefone
+    JPanel telefonePanel;
+    JButton addTelefone;
+    JButton addTelefoneConfirm;
+    JTextArea addTelefoneTextArea;
+    JLabel telefoneLabel;
+    JTextField telefoneText;
+
+
     App() {
         // Layout principal
         mainFrame = new JFrame("Agenda Telefônica");
@@ -72,6 +81,10 @@ public class App {
         addPossui = new JButton("Registrar Proprietário");
         addPossui.addActionListener(onButtonClicked);
         panelButtons.add(addPossui);
+
+        addTelefone = new JButton("Inserir Telefone");
+        addTelefone.addActionListener(onButtonClicked);
+        panelButtons.add(addTelefone);
 
         // Botões para escolher se a busca é por Pessoa (código) ou Carro (placa)
         buttonGroup = new ButtonGroup();
@@ -144,6 +157,12 @@ public class App {
                 String codigo = pessoaCodigoText.getText();
                 String placa = carroPlacaText.getText();
                 addPossuiTextArea.setText(InsertPossui.insert(codigo, placa));
+            } else if (e.getSource() == addTelefone) {
+                setupAddTelefone();
+            } else if (e.getSource() == addTelefoneConfirm) {
+                String codigo = pessoaCodigoText.getText();
+                String telefone = telefoneText.getText();
+                addTelefoneTextArea.setText(InsertTelefone.insert(codigo, telefone));
             }
         }
     }
@@ -220,57 +239,88 @@ public class App {
         mainFrame.setVisible(false);
     }
     
-        private void setupAddPessoa() {
+    private void setupAddPessoa() {
+        // secondaryFrame.dispose();
+        // gridLayout = new GridLayout(3, 2);
+        // addPessoaTextArea = new JTextArea();
+        // addPessoaTextArea.setEditable(false);
+
+        // pessoaPanel = new JPanel();
+        // pessoaPanel.setLayout(gridLayout);
+
+        // pessoaNome = new JLabel("Nome Pessoa");
+        // pessoaPessoaText = new JTextField(100);
+        // pessoaPanel.add(pessoaNome);
+        // pessoaPanel.add(pessoaCodigoText);            
+        
+        // pessoaDataNasc = new JLabel("Data de Nascimento");
+        // pessoaPessoaText = new JTextField(100);
+        // pessoaPanel.add(pessoaDataNasc);
+        // pessoaPanel.add(pessoaDataNascText);
+        
+        // pessoaHomepage = new JLabel("Homepage");
+        // pessoaPessoaText = new JTextField(100);
+        // pessoaPanel.add(pessoaHomepage);
+        // pessoaPanel.add(pessoaHomepageText);
+        
+        // pessoaCep = new JLabel("Cep");
+        // pessoaPessoaText = new JTextField(9);
+        // pessoaPanel.add(pessoaCep);
+        // pessoaPanel.add(pessoaCepText);
+        
+        // pessoaRua = new JLabel("Rua");
+        // pessoaPessoaText = new JTextField(100);
+        // pessoaPanel.add(pessoaRua);
+        // pessoaPanel.add(pessoaRuaText);
+        
+        // pessoaNumero = new JLabel("Numero");
+        // pessoaPessoaText = new JTextField(6);
+        // pessoaPanel.add(pessoaNumero);
+        // pessoaPanel.add(pessoaNumeroText);
+        
+        // pessoaComplemento = new JLabel("Complemento");
+        // pessoaPessoaText = new JTextField(100);
+        // pessoaPanel.add(pessoaComplemento);
+        // pessoaPanel.add(pessoaComplementoText);
+
+        // addPessoaConfirm = new JButton("Registrar");
+        // addPessoaConfirm.addActionListener(new OnButtonClicked());
+        // pessoaPanel.add(addCancel);
+        // pessoaPanel.add(addPessoaConfirm);
+
+        // secondaryFrame.getContentPane().add(BorderLayout.CENTER, pessoaPanel);
+        // secondaryFrame.getContentPane().add(BorderLayout.SOUTH, addPessoaTextArea);
+
+        // secondaryFrame.setVisible(true);
+        // mainFrame.setVisible(false);
+    }
+
+    private void setupAddTelefone() {
         secondaryFrame.dispose();
         gridLayout = new GridLayout(3, 2);
-        addPessoaTextArea = new JTextArea();
-        addPessoaTextArea.setEditable(false);
+        addTelefoneTextArea = new JTextArea();
+        addTelefoneTextArea.setEditable(false);
 
-        pessoaPanel = new JPanel();
-        pessoaPanel.setLayout(gridLayout);
+        telefonePanel = new JPanel();
+        telefonePanel.setLayout(gridLayout);
 
-        pessoaNome = new JLabel("Nome Pessoa");
-        pessoaPessoaText = new JTextField(100);
-        pessoaPanel.add(pessoaNome);
-        pessoaPanel.add(pessoaCodigoText);            
-        
-        pessoaDataNasc = new JLabel("Data de Nascimento");
-        pessoaPessoaText = new JTextField(100);
-        pessoaPanel.add(pessoaDataNasc);
-        pessoaPanel.add(pessoaDataNascText);
-        
-        pessoaHomepage = new JLabel("Homepage");
-        pessoaPessoaText = new JTextField(100);
-        pessoaPanel.add(pessoaHomepage);
-        pessoaPanel.add(pessoaHomepageText);
-        
-        pessoaCep = new JLabel("Cep");
-        pessoaPessoaText = new JTextField(9);
-        pessoaPanel.add(pessoaCep);
-        pessoaPanel.add(pessoaCepText);
-        
-        pessoaRua = new JLabel("Rua");
-        pessoaPessoaText = new JTextField(100);
-        pessoaPanel.add(pessoaRua);
-        pessoaPanel.add(pessoaRuaText);
-        
-        pessoaNumero = new JLabel("Numero");
-        pessoaPessoaText = new JTextField(6);
-        pessoaPanel.add(pessoaNumero);
-        pessoaPanel.add(pessoaNumeroText);
-        
-        pessoaComplemento = new JLabel("Complemento");
-        pessoaPessoaText = new JTextField(100);
-        pessoaPanel.add(pessoaComplemento);
-        pessoaPanel.add(pessoaComplementoText);
+        pessoaCodigo = new JLabel("Código dono do telefone");
+        pessoaCodigoText = new JTextField(4);
+        telefonePanel.add(pessoaCodigo);
+        telefonePanel.add(pessoaCodigoText);
 
-        addPessoaConfirm = new JButton("Registrar");
-        addPessoaConfirm.addActionListener(new OnButtonClicked());
-        pessoaPanel.add(addCancel);
-        pessoaPanel.add(addPessoaConfirm);
+        telefoneLabel = new JLabel("Telefone");
+        telefoneText = new JTextField(15);
+        telefonePanel.add(telefoneLabel);
+        telefonePanel.add(telefoneText);
 
-        secondaryFrame.getContentPane().add(BorderLayout.CENTER, pessoaPanel);
-        secondaryFrame.getContentPane().add(BorderLayout.SOUTH, addPessoaTextArea);
+        addTelefoneConfirm = new JButton("Registrar");
+        addTelefoneConfirm.addActionListener(new OnButtonClicked());
+        telefonePanel.add(addCancel);
+        telefonePanel.add(addTelefoneConfirm);
+
+        secondaryFrame.getContentPane().add(BorderLayout.CENTER, telefonePanel);
+        secondaryFrame.getContentPane().add(BorderLayout.SOUTH, addTelefoneTextArea);
 
         secondaryFrame.setVisible(true);
         mainFrame.setVisible(false);
