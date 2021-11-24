@@ -8,7 +8,6 @@ public class App {
     JFrame mainFrame;
     JFrame secondaryFrame;
     GridLayout gridLayout;
-    JButton addCancel;
 
     JPanel panel1;
     ButtonGroup buttonGroup;
@@ -38,6 +37,7 @@ public class App {
     JTextField carroCorText;
     JButton addCarroConfirm;
     JTextArea addCarroTextArea;
+    JButton addCancelCarro;
 
     // Add Pessoa
     JLabel pessoaCodigo;
@@ -60,12 +60,14 @@ public class App {
     JTextField pessoaNumeroText;
     JLabel pessoaComplemento;
     JTextField pessoaComplementoText;
+    JButton addCancelPessoa;
 
     // Add Possui
     JPanel possuiPanel;
     JButton addPossui;
     JButton addPossuiConfirm;
     JTextArea addPossuiTextArea;
+    JButton addCancelPossui;
 
     // Add Telefone
     JPanel telefonePanel;
@@ -74,6 +76,7 @@ public class App {
     JTextArea addTelefoneTextArea;
     JLabel telefoneLabel;
     JTextField telefoneText;
+    JButton addCancelTelefone;
 
     App() {
         // Layout principal
@@ -84,8 +87,6 @@ public class App {
         panel1 = new JPanel();
         panel2 = new JPanel();
         var onButtonClicked = new OnButtonClicked();
-        addCancel = new JButton("Cancelar");
-        addCancel.addActionListener(onButtonClicked);
 
         // MenuBar
         panelButtons = new JPanel();
@@ -158,12 +159,7 @@ public class App {
                     String codigo = textField.getText();
                     result = SelectPessoa.selectByCodigo(codigo);
                 }
-
                 textArea.setText(result);
-            } else if (e.getSource() == addCancel) {
-                mainFrame.setVisible(true);
-                secondaryFrame.setVisible(false);
-                secondaryFrame.dispose();
             } else if (e.getSource() == addCarro) {
                 setupAddCarro();
             } else if (e.getSource() == addCarroConfirm) {
@@ -187,13 +183,27 @@ public class App {
             } else if (e.getSource() == addPessoa) {
                 setupAddPessoa();
             } else if (e.getSource() == addPessoaConfirm) {
-                addPessoaTextArea.setText("sjdk");
+                String codigo = pessoaCodigoText.getText();
+                String nome = pessoaNomeText.getText();
+                String dataNasc = pessoaDataNascText.getText();
+                String homepage = pessoaHomepageText.getText();
+                String cep = pessoaCepText.getText();
+                String rua = pessoaRuaText.getText();
+                String numero = pessoaNumeroText.getText();
+                String complemento = pessoaComplementoText.getText();
+                addPessoaTextArea.setText(InsertPessoa
+                        .insert(codigo, nome, dataNasc, homepage, cep, rua, numero, complemento));
+            } else {
+                mainFrame.setVisible(true);
+                secondaryFrame.setVisible(false);
+                secondaryFrame = new JFrame("Agenda Telefônica - Adicionar");
+                secondaryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                secondaryFrame.setSize(800, 600);
             }
         }
     }
 
     private void setupAddCarro() {
-        secondaryFrame.dispose();
         gridLayout = new GridLayout(5, 2);
         addCarroTextArea = new JTextArea();
         addCarroTextArea.setEditable(false);
@@ -223,7 +233,9 @@ public class App {
 
         addCarroConfirm = new JButton("Adicionar");
         addCarroConfirm.addActionListener(new OnButtonClicked());
-        carroPanel.add(addCancel);
+        addCancelCarro = new JButton("Cancelar");
+        addCancelCarro.addActionListener(new OnButtonClicked());
+        carroPanel.add(addCancelCarro);
         carroPanel.add(addCarroConfirm);
 
         secondaryFrame.getContentPane().add(BorderLayout.CENTER, carroPanel);
@@ -234,7 +246,6 @@ public class App {
     }
 
     private void setupAddPossui() {
-        secondaryFrame.dispose();
         gridLayout = new GridLayout(3, 2);
         addPossuiTextArea = new JTextArea();
         addPossuiTextArea.setEditable(false);
@@ -254,7 +265,9 @@ public class App {
 
         addPossuiConfirm = new JButton("Registrar");
         addPossuiConfirm.addActionListener(new OnButtonClicked());
-        possuiPanel.add(addCancel);
+        addCancelPossui = new JButton("Cancelar");
+        addCancelPossui.addActionListener(new OnButtonClicked());
+        possuiPanel.add(addCancelPossui);
         possuiPanel.add(addPossuiConfirm);
 
         secondaryFrame.getContentPane().add(BorderLayout.CENTER, possuiPanel);
@@ -265,15 +278,19 @@ public class App {
     }
     
     private void setupAddPessoa() {
-        secondaryFrame.dispose();
-        gridLayout = new GridLayout(8, 2);
+        gridLayout = new GridLayout(9, 2);
         addPessoaTextArea = new JTextArea();
         addPessoaTextArea.setEditable(false);
 
         pessoaPanel = new JPanel();
         pessoaPanel.setLayout(gridLayout);
 
-        pessoaNome = new JLabel("Nome Pessoa");
+        pessoaCodigo = new JLabel("Código");
+        pessoaCodigoText = new JTextField(5);
+        pessoaPanel.add(pessoaCodigo);
+        pessoaPanel.add(pessoaCodigoText);
+
+        pessoaNome = new JLabel("Nome");
         pessoaNomeText = new JTextField(100);
         pessoaPanel.add(pessoaNome);
         pessoaPanel.add(pessoaNomeText);            
@@ -310,7 +327,9 @@ public class App {
 
         addPessoaConfirm = new JButton("Registrar");
         addPessoaConfirm.addActionListener(new OnButtonClicked());
-        pessoaPanel.add(addCancel);
+        addCancelPessoa = new JButton("Cancelar");
+        addCancelPessoa.addActionListener(new OnButtonClicked());
+        pessoaPanel.add(addCancelPessoa);
         pessoaPanel.add(addPessoaConfirm);
 
         secondaryFrame.getContentPane().add(BorderLayout.CENTER, pessoaPanel);
@@ -321,7 +340,6 @@ public class App {
     }
 
     private void setupAddTelefone() {
-        secondaryFrame.dispose();
         gridLayout = new GridLayout(3, 2);
         addTelefoneTextArea = new JTextArea();
         addTelefoneTextArea.setEditable(false);
@@ -341,7 +359,9 @@ public class App {
 
         addTelefoneConfirm = new JButton("Registrar");
         addTelefoneConfirm.addActionListener(new OnButtonClicked());
-        telefonePanel.add(addCancel);
+        addCancelTelefone = new JButton("Cancelar");
+        addCancelTelefone.addActionListener(new OnButtonClicked());
+        telefonePanel.add(addCancelTelefone);
         telefonePanel.add(addTelefoneConfirm);
 
         secondaryFrame.getContentPane().add(BorderLayout.CENTER, telefonePanel);
