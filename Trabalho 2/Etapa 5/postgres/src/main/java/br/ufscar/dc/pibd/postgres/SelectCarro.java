@@ -8,6 +8,8 @@ public class SelectCarro {
     static ResultSet resultSet;
 
     static String query =
+            "SELECT * FROM Carro WHERE Carro.placa='";
+    static String queryProprietarios =
             "SELECT * FROM (Pessoa NATURAL JOIN Possui NATURAL JOIN Carro) WHERE Carro.placa='";
     static String queryEnd = "';";
 
@@ -25,13 +27,19 @@ public class SelectCarro {
                 result.append(" Ano: ").append(resultSet.getString("ano")).append("\n");
                 result.append(" Modelo: ").append(resultSet.getString("modelo")).append("\n");
                 result.append(" Cor: ").append(resultSet.getString("cor")).append("\n");
-                result.append(" Proprietário(a):\n" );
-                result.append("   Código: ").append(resultSet.getString("codigo")).append("\n");
-                result.append("   Nome: ").append(resultSet.getString("nome")).append("\n\n");
             }
 
             // Se teve resultado, pega os carros
-            if (result.length() == 0) {
+            if (result.length() > 0) {
+                statement = connection.prepareStatement(queryProprietarios + placa + queryEnd);
+                resultSet = statement.executeQuery();
+
+                result.append(" Proprietário(a):\n" );
+                while (resultSet.next()) {
+                    result.append("   Código: ").append(resultSet.getString("codigo")).append("\n");
+                    result.append("   Nome: ").append(resultSet.getString("nome")).append("\n\n");
+                }
+            } else  {
                 result.append(" Zero resultados encontrados");
             }
 
