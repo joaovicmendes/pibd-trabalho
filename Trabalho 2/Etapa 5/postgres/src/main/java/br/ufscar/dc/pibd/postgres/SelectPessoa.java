@@ -13,6 +13,10 @@ public class SelectPessoa {
             "SELECT placa FROM (Pessoa NATURAL JOIN Possui NATURAL JOIN Carro) WHERE Pessoa.codigo='";
     static String queryTelefones =
             "SELECT telefone FROM (Pessoa NATURAL JOIN Telefone) WHERE Pessoa.codigo='";
+    static String queryAmigos1 =
+            "SELECT nome FROM (Pessoa JOIN Amizade ON Pessoa.codigo=codigo_pessoa2) WHERE Amizade.codigo_pessoa1='";
+    static String queryAmigos2 =
+            "SELECT nome FROM (Pessoa JOIN Amizade ON Pessoa.codigo=codigo_pessoa1) WHERE Amizade.codigo_pessoa2='";
     static String queryEnd = "';";
 
 
@@ -38,6 +42,15 @@ public class SelectPessoa {
 
             // Se teve resultado, pega os carros
             if (result.length() > 0) {
+                // Buscando telefones
+                statement = connection.prepareStatement(queryTelefones + codigo + queryEnd);
+                resultSet = statement.executeQuery();
+
+                result.append(" Telefone(s): ").append("\n");
+                while (resultSet.next()) {
+                    result.append("   ").append(resultSet.getString("telefone")).append("\n");
+                }
+
                 // Buscando carros
                 statement = connection.prepareStatement(queryCarros + codigo + queryEnd);
                 resultSet = statement.executeQuery();
@@ -46,13 +59,20 @@ public class SelectPessoa {
                 while (resultSet.next()) {
                     result.append("   ").append(resultSet.getString("placa")).append("\n");
                 }
-                // Buscando telefones
-                statement = connection.prepareStatement(queryTelefones + codigo + queryEnd);
+
+                // Buscando amigos
+                result.append(" Amizade(s): ").append("\n");
+                statement = connection.prepareStatement(queryAmigos1 + codigo + queryEnd);
                 resultSet = statement.executeQuery();
 
-                result.append(" Telefone(s): ").append("\n");
                 while (resultSet.next()) {
-                    result.append("   ").append(resultSet.getString("telefone")).append("\n");
+                    result.append("   ").append(resultSet.getString("nome")).append("\n");
+                }
+                statement = connection.prepareStatement(queryAmigos2 + codigo + queryEnd);
+                resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    result.append("   ").append(resultSet.getString("nome")).append("\n");
                 }
             } else {
                 result.append(" Zero resultados encontrados");
