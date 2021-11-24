@@ -18,9 +18,11 @@ public class InsertAmizade {
                     Utils.DatabaseUrl, Utils.DatabaseUser, Utils.DatabasePassword);
             statement = connection.prepareStatement(query);
 
+            Date data = new SimpleDateFormat("dd/MM/yyyy").parse(dataAmizade);
+
             statement.setInt(1, Integer.parseInt(codigo_pessoa1));
             statement.setInt(2, Integer.parseInt(codigo_pessoa2));
-            statement.setDate(3, new java.sql.Date(dataAmizade.getTime()));
+            statement.setDate(3, new java.sql.Date(data.getTime()));
 
             statement.executeUpdate();
             return "Amizade inserida";
